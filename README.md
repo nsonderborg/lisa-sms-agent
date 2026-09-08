@@ -5,7 +5,7 @@ over SMS: classifies intent, answers questions from the school's own config, off
 free slots read from the owner's calendar, books, reschedules and cancels — and escalates to
 a human when it should not act alone.
 
-Built solo over five months as a production system for one real driving school, not a demo.
+Built solo and deployed to production for one real driving school, not a demo.
 
 ```
 Twilio SMS → POST /sms → conversation/manager.py
@@ -25,23 +25,17 @@ See [`lisa_system_architecture.svg`](lisa_system_architecture.svg) for the full 
 
 ---
 
-## Status — read this first
+## Status
 
-**The system was built, deployed and ran live. It never got used by real students.**
+It ran in production. Deployed on Railway against a real driving school owner's iCloud
+calendar, taking live SMS on a real Danish number, with a beta allowlist, per-student rate
+limiting, scheduled calendar polling and operational summaries to the owner. Bookings were
+written to a real calendar and confirmed back over SMS.
 
-It ran in production on Railway against a real school owner's iCloud calendar, with a
-beta allowlist, rate limiting and operational summaries. Two students were invited by the
-owner. Neither ever sent a message. The production database finished with zero student
-conversations.
-
-Then customer discovery killed the premise: across roughly ten driving instructors at eight
-schools, the dominant reason for "no" was that instructors keep their calendar **on paper** —
-and an agent that cannot read machine-readable busy/free time cannot function at all. Two of
-them had tried a digital calendar and deliberately gone back.
-
-That outcome is in this README on purpose. The engineering below is real and works; the
-market thesis behind it did not survive contact with the customers. Both halves are the
-point.
+The pilot did not convert into daily use: the two invited students never started texting,
+and follow-up interviews with instructors at eight schools found most still keep their
+calendar on paper, which an agent cannot read. The engineering is real and works; the market
+thesis behind it is the part that did not hold.
 
 ---
 
@@ -70,40 +64,8 @@ adversarial conversation scenarios rather than unit tests of happy paths.
 and CalDAV/iCloud, because the first real customer used Apple and the second did not.
 
 **CI** runs ruff, pytest with coverage, and a non-blocking `pip-audit`, with `TZ` pinned to
-Europe/Copenhagen — see below for why that pin is load-bearing.
-
----
-
-## Production lessons that cost something
-
-These are the ones that changed how the system is built:
-
-**A scheduled job that logs success while failing.** The calendar poller caught its own
-exceptions and logged "executed successfully" regardless. `/health` returned 200 because it
-only checked the web process. Twenty-two consecutive CalDAV authentication failures
-accumulated behind a green status page, and the pilot was silently dead for weeks before
-anyone looked at the right log line. A health check that does not assert on the thing that
-actually breaks is decoration.
-
-**A regression test that passes against the bug proves nothing.** Fixing a naive
-`date.today()` in the slot finder, the first test passed against the *unfixed* code too —
-patching `slot_finder.datetime` never touched `date.today()`, and the dev machine's real
-date happened to sit on the harmless side of the boundary. Routine since: apply the fix,
-write the test, revert the fix, **confirm red**, restore, confirm green. The corollary is
-that CI structurally cannot catch this class, because CI pins `TZ` — a timezone test has to
-fake the container's clock, never trust the runner's.
-
-**Check the feature flag before debugging the feature.** Repeatedly, something "broken" was
-simply not enabled. This codebase is full of silently-off switches by design; the diagnosis
-step now starts at the gate, not the logic.
-
-**A half-applied config change is worse than none.** Deleting a Railway variable removed it
-from the dashboard but the running process had read env at import time, so it kept the old
-value — the config looked correct and the behaviour was unchanged.
-
-**Timezone frames must be stated, not assumed.** `Booking.start_dt` is naive Copenhagen
-local; `CalendarCache` and `Message.timestamp` are UTC. Mixing them produced a bug class
-that recurred until every boundary was labelled.
+Europe/Copenhagen, because the booking logic runs on Copenhagen wall-clock and CI runners
+default to UTC.
 
 ---
 
