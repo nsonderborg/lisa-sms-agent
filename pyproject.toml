@@ -1,0 +1,63 @@
+[project]
+name = "lisa-driving-school-secretary"
+version = "0.1.0"
+description = "SMS-based AI secretary for Danish driving schools"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "twilio>=9.0.0",
+    "anthropic>=0.40.0",
+    "python-dotenv>=1.0.0",
+    "python-multipart>=0.0.9",
+    "pyyaml>=6.0",
+    "sqlalchemy>=2.0.0",
+    "google-api-python-client>=2.194.0",
+    "google-auth>=2.49.2",
+    "pg8000>=1.31.0",
+    "icalendar>=6.0.0",
+    "httpx>=0.27.0",
+    "apscheduler>=3.10.0",
+    "streamlit>=1.38.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-mock>=3.14.0",
+    "pytest-subtests>=0.13.0",
+    "ruff>=0.6.0",
+    "httpx",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.coverage.run]
+source = ["app"]
+
+[tool.ruff]
+target-version = "py311"
+# .claude holds git worktrees + third-party skill scripts — not Lisa's code.
+extend-exclude = [".claude"]
+
+[tool.ruff.lint]
+# High-signal rule set (ruff's default): pyflakes `F` catches real bugs —
+# undefined names, unused imports/variables — plus pycodestyle import/statement/
+# syntax errors (E4/E7/E9). Line-length (E501) and cosmetic rules left off on
+# purpose to avoid a huge stylistic diff; enable more later if wanted.
+select = ["E4", "E7", "E9", "F"]
+
+[tool.pytest.ini_options]
+# Only collect the real suite — keeps bare `pytest` from importing the
+# live-API helper scripts in scripts/ (e.g. scripts/test_gcal.py).
+testpaths = ["tests"]
+# Quarantine list emptied 2026-07-03: the last 15 deselected tests (stale
+# gcal/poller/summary tests from the CalDAV migration) were rewritten against
+# the current architecture or replaced/removed where the behaviour they pinned
+# no longer exists. If a test must ever be quarantined again, triage it first —
+# the whole 23-test batch turned out to be test rot, zero production bugs.
+addopts = []

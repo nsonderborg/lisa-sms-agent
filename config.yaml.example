@@ -1,0 +1,95 @@
+# ============================================================
+# Lisa — School onboarding config
+# ============================================================
+# Copy to config.yaml and fill in your school's details.
+# Secrets (API keys, passwords) belong in .env, not here.
+# ============================================================
+
+school_name: Example Driving School
+address: "Main Street 1, 2100 København"
+city: København
+
+# Free-text — shown verbatim to students who ask about theory schedule.
+theory_schedule: >
+  Theory is flexible — drop in, no signup required.
+  Mondays 18:30-21, Wednesdays 18-21.
+
+# Free-text pricing — shown verbatim to students.
+pricing: >
+  Startpakke 9.499 kr (4 manøvretimer, 16 køretimer).
+  Lynkørekort 14.999 kr.
+  Enkelttime 500 kr (45 min).
+
+# When the daily summary SMS goes out (Copenhagen time).
+summary_times:
+  - "06:00"
+  - "12:00"
+  - "17:00"
+
+# Working hours — slot inference only suggests times in this window.
+work_start: "08:00"
+work_end: "21:00"
+
+# Reminders + timeouts (in hours)
+reminder_hours_before: 24
+no_reply_timeout_hours: 4
+
+license_types: [B]
+language_default: da
+
+# Used by slot_engine to recognise events whose summary contains a phone
+# number as a "real booking" (vs. a calendar block).
+calendar_phone_pattern: '\+45\d{8}'
+
+# ------------------------------------------------------------
+# CALENDAR BACKEND — pick one
+# ------------------------------------------------------------
+# google  — Google Calendar API (default for back-compat)
+# caldav  — CalDAV (e.g. iCloud / Apple Calendar)
+calendar_backend: google
+
+# Required when calendar_backend == google
+gcal_calendar_id: "your-calendar-id@group.calendar.google.com"
+# APScheduler cron 'hour' field for the calendar poll. "*" = every hour at :00.
+# Use a comma-separated list (e.g. "8,13,17") for less frequent polling.
+calendar_poll_hours: "*"
+calendar_cache_days_ahead: 30
+
+# Required when calendar_backend == caldav
+# Name of the calendar inside the iCloud account (must already exist).
+# See docs/CALDAV_SETUP.md for setup instructions.
+caldav_calendar_name: Lisa
+
+# ------------------------------------------------------------
+# Appointment types — duration + buffer + cancel-notice policy
+# ------------------------------------------------------------
+appointment_types:
+  lesson:
+    duration_minutes: 90
+    buffer_minutes: 15
+    cancel_notice_days: 1
+  manoeuvring:
+    duration_minutes: 180
+    buffer_minutes: 15
+    cancel_notice_days: 4
+  test:
+    duration_minutes: 60
+    buffer_minutes: 15
+    cancel_notice_days: 6
+
+# ------------------------------------------------------------
+# FAQ answers — keys map to template intents in app/response/templates.py
+# ------------------------------------------------------------
+faq:
+  pricing: "Vores startpakke koster 9.499 kr ..."
+  getting_started: "Kom forbi til intromøde ..."
+  duration: "En køretime varer 45 minutter ..."
+  payment_plans: "Vi tilbyder rentefri afdragsordning ..."
+  theory_info: "Teorien er fleksibel ..."
+  course_pause: "Du kan holde pause i op til 3 måneder ..."
+  theory_exam: "Tilmeld dig teoriprøven tidligt ..."
+  driving_range: "Manøvrebanen aftales med din instruktør ..."
+  first_aid: "Første hjælp er et lovkrav ..."
+  study_break: "Op til 3 måneders pause er tilladt ..."
+  locations: "Vi har lokationer i ..."
+  contact: "Ring 12 34 56 78 eller skriv kontakt@example.dk"

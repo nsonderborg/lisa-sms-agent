@@ -1,0 +1,52 @@
+name: CI
+
+# Runs the test suite + linter on every push to master and on every PR.
+# Master is the source of truth for prod (Railway rebuilds from it on any var
+# change), so a green master here is what keeps a broken build from reaching the
+# pilot. Needs no secrets: tests/conftest.py supplies dummy env vars and uses an
+# in-memory SQLite DB; the committed config.yaml provides school config.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Denmark-only product: app logic uses Europe/Copenhagen wall-clock. CI
+      # runners default to UTC, which shifts a few time-sensitive cancellation-
+      # policy tests across the "before noon" cutoff. Pin the tz to match prod
+      # intent and the local dev environment.
+      TZ: Europe/Copenhagen
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Audit dependencies (pip-audit)
+        # Non-blocking signal: surfaces known CVEs without failing the build on a
+        # transitive advisory that's a version away. Dependabot opens the actual
+        # bump PRs weekly. Flip continue-on-error off to make it a hard gate once
+        # the dependency set is pinned/locked.
+        continue-on-error: true
+        run: pip-audit
+
+      - name: Test (pytest + coverage)
+        run: pytest --cov=app --cov-report=term-missing

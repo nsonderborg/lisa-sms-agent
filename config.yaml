@@ -1,0 +1,169 @@
+school_name: Example Driving School
+address: Jernbane Allé 7, 2720 Vanløse
+city: København
+theory_schedule: >
+  Teorien er fleksibel – du møder bare op, ingen tilmelding nødvendig.
+  Vanløse (Jernbane Allé 7): Mandag 18:30-21 (T1 og T8 17-18:30), Tirsdag 17-18:30 (Intro),
+  Onsdag 18-21 (T4 lige uger / T5 ulige uger), Torsdag 18-21 (T6 lige uger / T3+T7 ulige uger).
+  Albertslund: kontakt skolen for aftale.
+summary_times:
+#- 06:00
+#- '12:00'
+#- '17:00'
+work_start: 07:00
+# Regular lessons run 07–18 (the owner, pilot criterion 2026-06-13). Lektion 44
+# (mørkekørsel / darkness driving) is ~21:00-or-dawn and sunset-dependent — it is
+# NOT auto-bookable via Lisa in the pilot; the owner arranges it directly. Per-type
+# evening hours = post-pilot enhancement.
+work_end: '18:00'
+# Minimum lead time (hours) before a bookable slot. Lisa won't offer anything
+# sooner than this from now, so an "ASAP" request can't land minutes away on the
+# instructor's unblocked time. 3h confirmed by the owner (2026-06-16). Env
+# MIN_NOTICE_HOURS overrides. 0 = off.
+min_notice_hours: 3
+# Lessons Lisa will NOT auto-book — she tells the student to arrange them directly
+# with the instructor and notifies the owner. 44 = mørkekørsel (darkness driving):
+# evening/sunset-dependent, the owner books it manually (2026-06-16).
+manual_booking_lessons: [44]
+# Absolute earliest-bookable date (ISO yyyy-mm-dd) — a hard launch/pause gate:
+# Lisa offers nothing before it. Empty = off. Set via env BOOKING_FLOOR_DATE for
+# transient gates (e.g. car-at-shop) so it's easy to CLEAR when no longer needed.
+booking_floor_date: ''
+reminder_hours_before: 24
+no_reply_timeout_hours: 4
+# 999.36 quick-win (2026-06-12): package wording reconciled VERBATIM to example-driving-school.dk
+# prisside (4 kørelektioner på manøvrebane / 16 kørelektioner på vej) and unit-equivalence
+# made explicit (kørelektion = 45 min) to close the lektion-vs-hour refund seam.
+# ✅ Kombipakke 11.999 CONFIRMED on example-driving-school.dk/priser (2026-06-12 site diff). The
+#    "Automatgear/" descriptor is OUR label — the site just says "Kombipakke" w/o listing
+#    contents; confirm what it includes with the owner. (Site also has Motorcykel 7.999 — B-only, N/A.)
+# ⚠️ Needs the owner's verbatim sign-off before go-live (per 999.36 gate).
+pricing: >
+  Startpakke 9.499 kr: ubegrænset teori (PC + tavle), 4 kørelektioner på manøvrebane
+  og 16 kørelektioner på vej. En kørelektion er 45 min, så manøvrebanen er i alt ca.
+  3 timer og kørslen på vej i alt ca. 12 timer.
+  Startpakke med førstehjælpskursus 10.649 kr (samme indhold + førstehjælpskursus med login).
+  Lynkørekort 14.999 kr: kørekort på 4-6 uger, ubegrænset teori, 4 kørelektioner på
+  manøvrebane, 16 kørelektioner på vej og førstehjælpskursus.
+  Automatgear/kombipakke 11.999 kr.
+  Enkeltlektion 500 kr (45 min). Aften/weekend tillæg 100-200 kr.
+  Afdragsordning tilgængelig fra 4.499 kr.
+license_types:
+- B
+language_default: da
+calendar_phone_pattern: \+45\d{8}
+faq:
+  pricing: >
+    Vores startpakke koster 9.499 kr og inkluderer ubegrænset teori (PC + tavle),
+    4 kørelektioner på manøvrebane og 16 kørelektioner på vej. En kørelektion er 45 min,
+    så manøvrebanen er i alt ca. 3 timer og kørslen på vej i alt ca. 12 timer.
+    Med førstehjælpskursus koster startpakken 10.649 kr.
+    Lynkørekortet (kørekort på 4-6 uger) koster 14.999 kr og inkluderer også førstehjælpskursus.
+    Enkeltlektion koster 500 kr (45 min). Vi tilbyder gebyrfri afdragsordning fra 4.499 kr.
+  getting_started: >
+    Du starter med et gratis intromøde – tirsdag kl. 17 i Vanløse, onsdag kl. 17
+    på Frederiksberg, eller hver 2. torsdag kl. 18:45 i Albertslund.
+    Her får du alle detaljer og kan tilmelde dig. Ingen aftale nødvendig.
+  duration: >
+    En kørelektion varer 45 minutter. Startpakken inkluderer 16 kørelektioner på vej
+    (i alt ca. 12 timer) og 4 kørelektioner på manøvrebane (i alt ca. 3 timer).
+    Med startpakken regner vi ca. 12 uger til kørekort. Lynpakken giver kørekort på 4-6 uger.
+  what_to_bring: >
+    Til en kørelektion skal du kun medbringe din lektionsplan og din kørekortansøgning.
+  payment_plans: >
+    Ja, vi tilbyder gebyrfri afdragsordning. Du kan starte fra 4.499 kr og
+    betale resten løbende. Spørg ved intromødet, eller skriv her hvis du
+    har flere spørgsmål.
+  theory_info: >
+    Teorien er fleksibel – du møder bare op, ingen tilmelding nødvendig.
+    Vanløse: mandag 18:30-21 (T1), tirsdag 17-18:30 (intro), onsdag og torsdag 18-21 (T3-T8 på skift).
+    Du skal have gennemført mindst 16 teorilektioner inden teoriprøven.
+    Undervisningen foregår som tavleundervisning.
+  course_pause: >
+    Ja, du kan holde pause undervejs. Reglerne tillader højst 3 måneders pause
+    mellem teori- eller kørelektioner. Kontakt os hvis du har brug for at sætte på pause.
+  theory_exam: >
+    Du skal tilmelde dig teoriprøven tidligt – der er typisk 2-4 ugers ventetid på teoriprøven.
+    Krav: min. 16 teorilektioner, forsikringsattest, førstehjælpsbevis og lægeattest.
+    Vi hjælper dig med tilmelding ved opstart.
+  driving_range: >
+    Manøvrebanen (den tekniske køreprøve) aftales med din instruktør efter opstart.
+    Du skal have gennemført Teori 1 inden du kan komme på manøvrebanen.
+    Skriv fx "Jeg vil gerne booke manøvrebane" her, så finder vi en tid sammen.
+  first_aid: >
+    Første hjælp er et lovkrav for at få kørekort. Vi udbyder kurset selv, og du kan
+    tage det når som helst i forløbet – men hellere tidligt end sent.
+  medical_certificate: >
+    Lægeerklæring til kørekort er et lovkrav. Du får den hos din egen læge – det
+    er en kort undersøgelse med synstjek og generelt helbredstjek, og koster
+    typisk 500-750 kr. Book tid hos lægen tidligt i forløbet; der er ofte
+    1-3 ugers ventetid. De fleste læger sender attesten digitalt direkte til
+    myndighederne, så du normalt ikke selv skal aflevere et papir.
+    Lægeerklæringen skal være på plads før du kan søge kørekort.
+  license_application: >
+    Selve kørekortansøgningen indleveres hos Borgerservice. Du booker tid på
+    borger.dk – typisk 1-3 ugers ventetid på en ledig tid. Medbring sundhedskort
+    eller pas, og et pasfoto (mange Borgerservicer tager billedet for dig –
+    spørg når du booker). Søg så snart din lægeerklæring
+    er bestilt – uden en aktiv kørekortansøgning kan du ikke tilmelde dig teoriprøven.
+  study_break: >
+    Ja, du kan holde pause i op til 3 måneder ad gangen ifølge reglerne.
+    Kontakt os så vi kan notere det.
+  locations: >
+    Vi har tre lokationer: Vanløse (Jernbane Allé 7), Frederiksberg (H.C. Ørsteds Vej 50d)
+    og Albertslund (Roskildevej 16a). Køreundervisningen foregår primært fra Vanløse,
+    men vi aftaler mødested ved booking.
+  contact: >
+    Til booking af kørelektioner, manøvrebane eller teoriprøve — skriv her,
+    så ordner jeg det direkte. For andre henvendelser kan du ringe på
+    53 58 19 04 eller skrive til kontor@example-driving-school.dk. Vi har haft
+    kørekursus siden 2002 og er kendt for Københavns højeste beståelsesprocent.
+gcal_calendar_id: 036b7baf6ef0d73d4c808ba4a584bb4cb87abe2c0424a07336c596090682e341@group.calendar.google.com
+calendar_poll_hours: "*"
+calendar_cache_days_ahead: 30
+appointment_types:
+  lesson:
+    duration_minutes: 90
+    buffer_minutes: 0   # back-to-back per the owner (ride-along 2026-06-10); per-instructor buffer → 999.26
+    cancel_notice_days: 1
+    # Appended to the confirmation reply after a student confirms a reminder
+    # ("Husk at medbringe ... i morgen."). Danish only; keep it a bring-list,
+    # not prerequisites (you can't "bring" completed lessons).
+    what_to_bring: din lektionsplan og din kørekortansøgning
+  manoeuvring:
+    duration_minutes: 180
+    buffer_minutes: 0   # back-to-back per the owner (ride-along 2026-06-10); per-instructor buffer → 999.26
+    cancel_notice_days: 4
+    what_to_bring: din lektionsplan og din kørekortansøgning
+  test:
+    duration_minutes: 60
+    buffer_minutes: 0   # back-to-back per the owner (ride-along 2026-06-10); per-instructor buffer → 999.26
+    cancel_notice_days: 6
+    what_to_bring: >-
+      din kørekortansøgning, din lektionsplan, pas eller dåbsattest — og dit
+      kørekort hvis du har et
+
+# 999.37 PILOT SEED — content labels for "Kørsel på vej" lektioner.
+# Keyed by the OFFICIAL lektionsplan number the student reads off their own plan
+# (the one Lisa tells them to check). Road-driving lessons fall at these numbers;
+# the gaps (22-25, 30-33, 38-41 etc.) are theory / manøvrebane / køreteknisk and
+# have no label here. Used ONLY to nudge the student to verify their position at
+# first-booking onboarding — capture + display, never enforcement.
+# Source: Example Driving School lektionsplan (Nikolas, 2026-06-14). ⚠️ PROVISIONAL —
+# the owner to verify; the exact roundabout/darkness placement can be per-student.
+lektionsplan_labels:
+  18: igangsætning, standsning og placering
+  19: igangsætning, standsning og placering
+  20: hastighed, vognbaneskift og baglænskørsel
+  21: hastighed, vognbaneskift og baglænskørsel
+  26: kørsel forbi holdende og gående, møde
+  27: kørsel forbi holdende og gående, møde
+  28: overhaling og trafiksanerede områder
+  29: overhaling og trafiksanerede områder
+  34: vejkryds (ligeud, højre- og venstresving)
+  35: vejkryds (ligeud, højre- og venstresving)
+  36: rundkørsel
+  37: rundkørsel
+  42: motorvej, kørsel ved siden af andre og parkering
+  43: motorvej, kørsel ved siden af andre og parkering
+  44: mørkekørsel, tunnel og letbane
