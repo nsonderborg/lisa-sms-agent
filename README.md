@@ -1,5 +1,5 @@
 # Lisa — an SMS booking agent for Danish driving schools
-Link to a demo video here [https://youtube.com/shorts/TqEK9m1pO6Q](url)
+Link to a demo video here https://youtube.com/shorts/TqEK9m1pO6Q
 
 A conversational agent that handles a driving school's inbound student messages end to end
 over SMS: classifies intent, answers questions from the school's own config, offers real
