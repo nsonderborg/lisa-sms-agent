@@ -1,4 +1,5 @@
 # Lisa — an SMS booking agent for Danish driving schools
+Link to a demo video here [https://youtube.com/shorts/TqEK9m1pO6Q](url)
 
 A conversational agent that handles a driving school's inbound student messages end to end
 over SMS: classifies intent, answers questions from the school's own config, offers real
@@ -31,11 +32,6 @@ It ran in production. Deployed on Railway against a real driving school owner's 
 calendar, taking live SMS on a real Danish number, with a beta allowlist, per-student rate
 limiting, scheduled calendar polling and operational summaries to the owner. Bookings were
 written to a real calendar and confirmed back over SMS.
-
-The pilot did not convert into daily use: the two invited students never started texting,
-and follow-up interviews with instructors at eight schools found most still keep their
-calendar on paper, which an agent cannot read. The engineering is real and works; the market
-thesis behind it is the part that did not hold.
 
 ---
 
