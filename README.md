@@ -1,6 +1,8 @@
 # Lisa — an SMS booking agent for Danish driving schools
 Link to a demo video here https://youtube.com/shorts/TqEK9m1pO6Q
 
+Case study: [what broke in production and what I changed](docs/CASE-STUDY.md)
+
 A conversational agent that handles a driving school's inbound student messages end to end
 over SMS: classifies intent, answers questions from the school's own config, offers real
 free slots read from the owner's calendar, books, reschedules and cancels — and escalates to
@@ -57,7 +59,9 @@ Includes `tests/test_pressure_scenarios.py` and `scripts/simulate_clueless_stude
 adversarial conversation scenarios rather than unit tests of happy paths.
 
 **Two calendar backends behind one dispatcher** (`app/calendar/client.py`), Google Calendar
-and CalDAV/iCloud, because the first real customer used Apple and the second did not.
+and CalDAV/iCloud. The build started on Google; the pilot owner used Apple Calendar, so CalDAV
+was added behind the same interface and the backend became a setting the owner picks at
+onboarding.
 
 **CI** runs ruff, pytest with coverage, and a non-blocking `pip-audit`, with `TZ` pinned to
 Europe/Copenhagen, because the booking logic runs on Copenhagen wall-clock and CI runners
